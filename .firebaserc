@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "care-by-code"
+    "default": "care-by-code",
+    "development": "care-by-code-development"
   }
 }
