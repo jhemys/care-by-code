@@ -15,4 +15,5 @@ jobs:
       - name: Firebase Deploy
         run: |
           sudo npm install -g firebase-tools
+          firebase use development --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARE_BY_CODE }}
           firebase deploy --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARE_BY_CODE }} -P development
