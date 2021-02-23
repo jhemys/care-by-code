@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const questionnaireSlice = createSlice({
+  name: 'questionnaire',
   initialState: {
+    userName: null,
+    age: null,
+    gender: null,
     questions: [],
-    loading: false
+    loading: false,
   },
   reducers: {
     questionsLoading: state => {
@@ -21,10 +24,69 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { questionsLoading, questionsLoaded } = counterSlice.actions;
-
-const fetchQuestions = () => async dispatch => {
+export const fetchQuestions = () => async dispatch => {
   dispatch(questionsLoading())
-  const response = await usersAPI.fetchAll()
-  dispatch(questionsLoaded(response.data))
+  
+  const response = {
+    data: [{
+      id: 1,
+      title: "Que atividades você pratica ao menos uma vez por semana?",
+      options: [{
+        key: 1,
+        value: "Natação"
+      },
+      {
+        key: 2,
+        value: "Atividade em ambiente fechado"
+      },
+      {
+        key: 3,
+        value: "Atividade ao ar livrve"
+      },
+      {
+        key: 4,
+        value: "Praia"
+      },
+      {
+        key: 5,
+        value: "Sauna/Spa"
+      },
+      {
+        key: 6,
+        value: "Nenhuma"
+      }]
+    },
+    {
+      id: 2,
+      title: "Qual o tipo de seu cabelo?",
+      options: [{
+        key: 1,
+        value: "Liso"
+      },
+      {
+        key: 2,
+        value: "Ondulado"
+      },
+      {
+        key: 3,
+        value: "Cacheado"
+      },
+      {
+        key: 4,
+        value: "Crespo"
+      }]
+    }]
+  };
+
+  setTimeout(() => {
+    // const response = await usersAPI.fetchAll()
+    dispatch(questionsLoaded(response.data))
+  }, 1000);
 }
+
+export const selectLoading = state => state.questionnaire.loading;
+export const selectQuestions = state => state.questionnaire.questions;
+
+export const { questionsLoading, questionsLoaded } = questionnaireSlice.actions;
+
+export default questionnaireSlice.reducer;
