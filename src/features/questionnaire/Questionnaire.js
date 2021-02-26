@@ -1,36 +1,40 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchQuestions,
   selectLoading,
-  selectQuestions
-} from './questionnaireSlice';
-// import styles from './Counter.module.css';
+  selectQuestions,
+} from "./questionnaireSlice";
+import Question from "./Question";
 
-export default function Questionnaire() {
+const Questionnaire = ({position, nextQuestion, prevQuestion}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchQuestions());
-  }, [dispatch])
+  }, [dispatch]);
   const loading = useSelector(selectLoading);
   const questions = useSelector(selectQuestions);
-  
 
   return (
     <div>
-      {loading ? "Carregando..." : questions.map(question => 
-        <>
-          <h1>{question.title}</h1>
-          {question.options.map(option => 
-            <p>
-              <input type="radio" value={option.key} name={question.id} id={`${question.id}_${option.key}`} />
-              <label for={`${question.id}_${option.key}`}>{option.value}</label>
-            </p>
-          )}
-        </>
-      )}    
-      
+      {loading
+        ? "Carregando..."
+        : questions.map((question, index) => (
+            <Question
+              position={position}
+              nextQuestion={nextQuestion}
+              prevQuestion={prevQuestion}
+              key={index}
+              questionIndex={index}
+              id={question.id}
+              title={question.title}
+              options={question.options}
+              isFinalQuestion={index === questions.length - 1}
+            />
+          ))}
     </div>
   );
 }
+
+export default Questionnaire;

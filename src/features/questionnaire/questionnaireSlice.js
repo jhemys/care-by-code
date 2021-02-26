@@ -41,7 +41,7 @@ export const fetchQuestions = () => async dispatch => {
       },
       {
         key: 3,
-        value: "Atividade ao ar livrve"
+        value: "Atividade ao ar livre"
       },
       {
         key: 4,
