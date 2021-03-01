@@ -5,6 +5,7 @@ import SurveyForm from "./../features/questionnaire/SurveyForm";
 import './../features/questionnaire/Survey.css';
 
 function Home() {
+  console.log(process.env);
   // writeQuestionsData("1", "test", "a.a", "aa");
   return (
     <div className="App">
