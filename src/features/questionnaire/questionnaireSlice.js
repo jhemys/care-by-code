@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getQuestions } from '../../database/questionDatabase';
 
 export const questionnaireSlice = createSlice({
   name: 'questionnaire',
@@ -27,61 +28,8 @@ export const questionnaireSlice = createSlice({
 export const fetchQuestions = () => async dispatch => {
   dispatch(questionsLoading())
   
-  const response = {
-    data: [{
-      id: 1,
-      title: "Que atividades você pratica ao menos uma vez por semana?",
-      options: [{
-        key: 1,
-        value: "Natação"
-      },
-      {
-        key: 2,
-        value: "Atividade em ambiente fechado"
-      },
-      {
-        key: 3,
-        value: "Atividade ao ar livre"
-      },
-      {
-        key: 4,
-        value: "Praia"
-      },
-      {
-        key: 5,
-        value: "Sauna/Spa"
-      },
-      {
-        key: 6,
-        value: "Nenhuma"
-      }]
-    },
-    {
-      id: 2,
-      title: "Qual o tipo de seu cabelo?",
-      options: [{
-        key: 1,
-        value: "Liso"
-      },
-      {
-        key: 2,
-        value: "Ondulado"
-      },
-      {
-        key: 3,
-        value: "Cacheado"
-      },
-      {
-        key: 4,
-        value: "Crespo"
-      }]
-    }]
-  };
-
-  setTimeout(() => {
-    // const response = await usersAPI.fetchAll()
-    dispatch(questionsLoaded(response.data))
-  }, 1000);
+  getQuestions()
+    .then(questions => dispatch(questionsLoaded(questions)));
 }
 
 export const selectLoading = state => state.questionnaire.loading;
