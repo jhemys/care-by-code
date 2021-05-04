@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -11,10 +13,20 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300' rel='stylesheet' type='text/css'>
     <title>Care by Code</title>
   </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="bg"></div>
+			
+			<div id="main"></div>
+		</div>
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
   </body>
 </html>
