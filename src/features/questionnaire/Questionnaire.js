@@ -31,6 +31,8 @@ const Questionnaire = ({position, nextQuestion, prevQuestion}) => {
               title={question.title}
               options={question.options}
               isFinalQuestion={index === questions.length - 1}
+              questionAnsweredMessage={question.questionAnsweredMessage}
+              imageUrl={question.imageUrl}
             />
           ))}
     </div>

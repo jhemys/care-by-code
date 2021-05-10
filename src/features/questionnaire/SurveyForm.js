@@ -5,7 +5,7 @@ import { Formik, Form, Field } from "formik";
 
 const SurveyForm = () => {
   const [position, setSurveyPosition] = useState(0);
-  const [gender, setGender] = useState('');
+  const [showWelcomeMessage, toggleWelcomeMessage] = useState(false);
 
   const nextQuestion = () => setSurveyPosition(position + 1);
   const prevQuestion = () => setSurveyPosition(position - 1);
@@ -23,9 +23,9 @@ const SurveyForm = () => {
           <div className={position === 0 ? "current-survey" : "hidden-survey"}>
             <p>Olá, como você gosta de ser chamado/a?</p>
             <p>
-              <Field type="text" className="inputForm" name="name" placeholder="Nome" />
+              <Field type="text" className="inputForm" name="name" placeholder="Nome" onBlur={() => toggleWelcomeMessage(true)} />
             </p>
-            <p class="textName">Que bom te ver aqui, Camila!</p>
+            {showWelcomeMessage && <p className="textName questao-respondida">Que bom te ver aqui, {props.values.name}!</p> }
             <p>Quando é seu aniversário?</p>
             <p>
               <Field type="number" className="inputForm" name="age" placeholder="Idade" />
@@ -34,20 +34,21 @@ const SurveyForm = () => {
             <p>
               <Chip
                 label="Mulher"
-                onClick={() => { setGender('F'); props.setFieldValue('age', 'F'); } }
-                variant={gender === 'F' ? undefined : "outlined"}
+                
+                onClick={() => { props.setFieldValue('gender', 'F'); } }
+                variant={props.values.gender === 'F' ? undefined : "outlined"}
                 className="btnPadrão"
               />
               <Chip
                 label="Homem"
-                onClick={() => { setGender('M'); props.setFieldValue('age', 'M'); } }
-                variant={gender === 'M' ? undefined : "outlined"}
+                onClick={() => { props.setFieldValue('gender', 'M'); } }
+                variant={props.values.gender === 'M' ? undefined : "outlined"}
                 className="btnPadrão"
               />
               <Chip
                 label="Não gostaria"
-                onClick={() => { setGender('X'); props.setFieldValue('age', 'X'); } }
-                variant={gender === 'X' ? undefined : "outlined"}
+                onClick={() => { props.setFieldValue('gender', 'X'); } }
+                variant={props.values.gender === 'X' ? undefined : "outlined"}
                 className="btnPadrão"
               />
             </p>

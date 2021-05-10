@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
+import Chip from "@material-ui/core/Chip";
 
 const Question = ({
   id,
@@ -10,11 +11,13 @@ const Question = ({
   position,
   nextQuestion,
   prevQuestion,
+  questionAnsweredMessage,
+  imageUrl,
 }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const questionPosition = questionIndex + 1;
-  
+
   return (
     <div
       className={
@@ -24,34 +27,37 @@ const Question = ({
       <h1>{title}</h1>
       {options.map((option, index) => (
         <p key={index}>
-          <label>
-            <input
-              type="radio"
-              name={`questions.${questionIndex}.value`}
-              value={option.key}
-              checked={
-                (values?.questions &&
-                  values.questions[questionIndex] &&
-                  values.questions[questionIndex].value === option.key) ||
-                false
-              }
-              onChange={() =>
-                setFieldValue(`questions.${questionIndex}.value`, option.key)
-              }
-            />
-            {/* <Field
-              type="radio"
-              name={`questions.${questionIndex}.value`}
-              checked={
-                values.questions[questionIndex] &&
-                values.questions[questionIndex].value === option.key
-              }
-              value={option.key}
-            /> */}
-            {option.value}
-          </label>
+          <Chip
+            label={option.value}
+            onClick={() => {
+              setFieldValue(`questions.${questionIndex}.value`, option.key);
+            }}
+            variant={
+              values?.questions &&
+              values.questions[questionIndex] &&
+              values.questions[questionIndex].value === option.key
+                ? undefined
+                : "outlined"
+            }
+            className="btnPadrão"
+          />
         </p>
       ))}
+      {values?.questions &&
+        values.questions[questionIndex] &&
+        values.questions[questionIndex].value && (
+          <p
+            className={
+              values?.questions &&
+              values.questions[questionIndex] &&
+              values.questions[questionIndex].value
+                ? "questao-respondida"
+                : null
+            }
+          >
+            {questionAnsweredMessage}
+          </p>
+        )}
       <button type="button" onClick={prevQuestion}>
         Voltar
       </button>
@@ -64,6 +70,9 @@ const Question = ({
           Próxima
         </button>
       )}
+      <p className="imgBottom">
+        {imageUrl && <img src={`assets/css/images/${imageUrl}`} alt="" />}
+      </p>
     </div>
   );
 };
