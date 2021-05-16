@@ -29,9 +29,9 @@ class FormikPersistor extends PureComponent {
     return `formik.form.${this.props.name}`
   }
 
-  // clear = () => {
-  //   window.localStorage.removeItem(this.storageKey)
-  // }
+  clear = () => {
+    window.localStorage.removeItem(this.storageKey)
+  }
 
   render() {
     return null
