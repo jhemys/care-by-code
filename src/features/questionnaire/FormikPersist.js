@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react'
 import { FormikConsumer } from 'formik'
 
 class FormikPersistor extends PureComponent {
-  componentWillMount() {
-    window.addEventListener('beforeunload', this.clear)
-  }
+  // componentWillMount() {
+  //   window.addEventListener('beforeunload', this.clear)
+  // }
 
   componentDidMount() {
     const { setValues, setErrors } = this.props
@@ -17,8 +17,15 @@ class FormikPersistor extends PureComponent {
   }
 
   componentDidUpdate() {
-    const { values, errors } = this.props
+    console.log(window.localStorage);
+    const { values, errors, isSubmitting } = this.props
+    console.log(isSubmitting);
+
     window.localStorage.setItem(this.storageKey, JSON.stringify({ values, errors }))
+    if (isSubmitting)
+      this.clear();
+
+    console.log(window.localStorage);
   }
 
   // componentWillUnmount() {
@@ -30,7 +37,8 @@ class FormikPersistor extends PureComponent {
   }
 
   clear = () => {
-    window.localStorage.removeItem(this.storageKey)
+    window.localStorage.removeItem(this.storageKey);
+    console.log('FOI');
   }
 
   render() {
@@ -40,13 +48,14 @@ class FormikPersistor extends PureComponent {
 
 const FormikPersist = ({ name }) => (
   <FormikConsumer>
-    {({ values, errors, setValues, setErrors }) => (
+    {({ values, errors, setValues, setErrors, isSubmitting }) => (
       <FormikPersistor
         name={name}
         setValues={setValues}
         setErrors={setErrors}
         values={values}
         errors={errors}
+        isSubmitting={isSubmitting}
       />
     )}
   </FormikConsumer>

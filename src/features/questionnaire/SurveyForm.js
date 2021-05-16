@@ -14,9 +14,10 @@ const SurveyForm = () => {
   return (
     <Formik
       initialValues={{ name: "", age: "", gender: "", questions: [] }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         console.log(values);
         setSubmitting(false);
+        resetForm({ values: { name: "", age: "", gender: "", questions: [] } });
       }}
     >
       {(props) => (
